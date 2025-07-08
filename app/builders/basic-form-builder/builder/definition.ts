@@ -7,6 +7,7 @@ import { dataViewEntity } from "../entities/data-view/definition";
 import { numberFieldEntity } from "../entities/number-field/definition";
 import { checkboxFieldEntity } from "../entities/checkbox-field/definition";
 import { sliderFieldEntity } from "../entities/slider-field/definition";
+import { tabsEntity } from "../entities/tabs/definition";
 import { selectFieldEntity } from "../entities/select-field/definition";
 import { textFieldEntity } from "../entities/text-field/definition";
 import { textareaFieldEntity } from "../entities/textarea-field/definition";
@@ -23,5 +24,6 @@ export const basicFormBuilder = createBuilder({
     numberFieldEntity,
     checkboxFieldEntity,
     sliderFieldEntity,
+    tabsEntity,
   ],
 });

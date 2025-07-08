@@ -5,6 +5,7 @@ import { DataViewEntity } from "../entities/data-view/component";
 import { NumberFieldEntity } from "../entities/number-field/component";
 import { CheckboxFieldEntity } from "../entities/checkbox-field/component";
 import { SliderFieldEntity } from "../entities/slider-field/component";
+import { TabsEntity } from "../entities/tabs/component";
 import { SelectFieldEntity } from "../entities/select-field/component";
 import { TextFieldEntity } from "../entities/text-field/component";
 import { TextareaFieldEntity } from "../entities/textarea-field/component";
@@ -20,4 +21,5 @@ export const entitiesComponents = {
   numberField: NumberFieldEntity,
   checkboxField: CheckboxFieldEntity,
   sliderField: SliderFieldEntity,
+  tabs: TabsEntity,
 };

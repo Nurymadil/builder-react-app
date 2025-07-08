@@ -31,6 +31,7 @@ import { DataViewAttributes } from "../entities/data-view/attributes-component";
 import { NumberFieldAttributes } from "../entities/number-field/attributes-component";
 import { CheckboxFieldAttributes } from "../entities/checkbox-field/attributes-component";
 import { SliderFieldAttributes } from "../entities/slider-field/attributes-component";
+import { TabsAttributes } from "../entities/tabs/attributes-component";
 import { SelectFieldAttributes } from "../entities/select-field/attributes-component";
 import { TextFieldAttributes } from "../entities/text-field/attributes-component";
 import { TextareaFieldAttributes } from "../entities/textarea-field/attributes-component";
@@ -131,6 +132,7 @@ const entitiesAttributesComponents = {
   numberField: NumberFieldAttributes,
   checkboxField: CheckboxFieldAttributes,
   sliderField: SliderFieldAttributes,
+  tabs: TabsAttributes,
 };
 
 export function BasicFormBuilder() {
@@ -398,6 +400,19 @@ export function BasicFormBuilder() {
                       }
                     >
                       Data View
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "tabs",
+                          attributes: {
+                            tabLabels: ["Tab 1"],
+                            tabContents: [""],
+                          },
+                        })
+                      }
+                    >
+                      Tabs
                     </AddElementButton>
                   </div>
                 </DialogHeader>
