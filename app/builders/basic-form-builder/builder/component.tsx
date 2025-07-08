@@ -177,6 +177,7 @@ export function BasicFormBuilder() {
         builderStore.setEntityParent(created.id, activeEntityId);
       }
     }
+    return created;
   }
 
   const [activeEntityId, setActiveEntityId] = useState<string | null>(
@@ -432,20 +433,17 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() => {
-                        const tabs = builderStore.addEntity({
+                        const tabs = addEntity({
                           type: "tabs",
                           attributes: {
                             tabLabels: ["Tab 1"],
                           },
                         });
-                        const panel = builderStore.addEntity({
+                        const panel = addEntity({
                           type: "tabPanel",
                           attributes: {},
                         });
                         builderStore.setEntityParent(panel.id, tabs.id);
-                        if (activeEntityId && builderStore.getSchema().entities[activeEntityId]?.type === "tabPanel") {
-                          builderStore.setEntityParent(tabs.id, activeEntityId);
-                        }
                       }}
                     >
                       Tabs
