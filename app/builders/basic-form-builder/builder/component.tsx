@@ -2,16 +2,6 @@
 
 import { useState, type ReactNode } from "react";
 import { DndContainer, DndItem } from "@/components/dnd";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { InfoIcon, XIcon } from "lucide-react";
 
@@ -41,25 +31,7 @@ import { basicFormBuilder } from "./definition";
 import { entitiesComponents } from "./entities-components";
 import { initialSchema } from "./initial-schema";
 import { Preview } from "./preview";
-
-function AddElementButton(props: { onClick: () => void; children: ReactNode }) {
-  return (
-    <DialogClose asChild>
-      <Button
-        variant="outline"
-        className="mr-2"
-        onClick={() =>
-          // The auto-focus on attributes is triggered only after the modal has been hidden.
-          setTimeout(() => {
-            props.onClick();
-          }, 200)
-        }
-      >
-        {props.children}
-      </Button>
-    </DialogClose>
-  );
-}
+import { AddElementDialog } from "./add-element-dialog";
 
 function Entity(props: {
   entityId: string;
@@ -159,6 +131,30 @@ export function BasicFormBuilder() {
           payload.entity.id,
           payload.attributeName,
         );
+        if (
+          payload.entity.type === "tabs" &&
+          payload.attributeName === "tabLabels"
+        ) {
+          const labels = payload.entity.attributes.tabLabels;
+          const schema = builderStore.getSchema();
+          const children = schema.entities[payload.entity.id].children ?? [];
+
+          if (labels.length > children.length) {
+            for (let i = children.length; i < labels.length; i++) {
+              const panel = builderStore.addEntity({
+                type: "tabPanel",
+                attributes: {},
+              });
+              builderStore.setEntityParent(panel.id, payload.entity.id, {
+                index: i,
+              });
+            }
+          } else if (labels.length < children.length) {
+            for (const id of children.slice(labels.length)) {
+              builderStore.deleteEntity(id);
+            }
+          }
+        }
       },
     },
     initialData: {
@@ -166,19 +162,6 @@ export function BasicFormBuilder() {
       schema: initialSchema as any,
     },
   });
-
-  function addEntity(
-    entity: Parameters<typeof builderStore.addEntity>[0],
-  ) {
-    const created = builderStore.addEntity(entity);
-    if (activeEntityId) {
-      const active = builderStore.getSchema().entities[activeEntityId];
-      if (active && active.type === "tabPanel") {
-        builderStore.setEntityParent(created.id, activeEntityId);
-      }
-    }
-    return created;
-  }
 
   const [activeEntityId, setActiveEntityId] = useState<string | null>(
     builderStore.getData().schema.root[0],
@@ -272,186 +255,15 @@ export function BasicFormBuilder() {
                 )}
               </DndContainer>
             </div>
-            <Dialog modal>
-              <div className="flex justify-center">
-                <DialogTrigger asChild>
-                  <Button
-                    className={cn("w-full", {
-                      "max-w-xs": !activeEntityId,
-                    })}
-                  >
-                    Add Element
-                  </Button>
-                </DialogTrigger>
-              </div>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>New element</DialogTitle>
-                  <DialogDescription>Choose an element type.</DialogDescription>
-                  <div className="space-y-2">
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "textField",
-                          attributes: {
-                            label: "Text Field",
-                          },
-                        })
-                      }
-                    >
-                      Text Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "textareaField",
-                          attributes: {
-                            label: "Textarea Field",
-                          },
-                        })
-                      }
-                    >
-                      Textarea Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "selectField",
-                          attributes: {
-                            label: "Select Field",
-                            options: [],
-                          },
-                        })
-                      }
-                    >
-                      Select Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "treeSelectField",
-                          attributes: {
-                            label: "Tree Select Field",
-                            treeOptions: [],
-                          },
-                        })
-                      }
-                    >
-                      Tree Select Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "datePickerField",
-                          attributes: {
-                            label: "Date Picker Field",
-                          },
-                        })
-                      }
-                    >
-                      Date Picker Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "paragraph",
-                          attributes: {
-                            content: {
-                              text: "",
-                            },
-                          },
-                        })
-                      }
-                    >
-                      Paragraph
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "numberField",
-                          attributes: {
-                            label: "Number Field",
-                          },
-                        })
-                      }
-                    >
-                      Number Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "checkboxField",
-                          attributes: {
-                            label: "Checkbox Field",
-                          },
-                        })
-                      }
-                    >
-                      Checkbox Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "sliderField",
-                          attributes: {
-                            label: "Slider Field",
-                            min: 0,
-                            max: 100,
-                            step: 1,
-                          },
-                        })
-                      }
-                    >
-                      Slider Field
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "dataTable",
-                          attributes: {
-                            label: "Data Table",
-                            columns: [],
-                            rows: [],
-                          },
-                        })
-                      }
-                    >
-                      Data Table
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() =>
-                        addEntity({
-                          type: "dataView",
-                          attributes: {
-                            label: "Data View",
-                            data: [],
-                          },
-                        })
-                      }
-                    >
-                      Data View
-                    </AddElementButton>
-                    <AddElementButton
-                      onClick={() => {
-                        const tabs = addEntity({
-                          type: "tabs",
-                          attributes: {
-                            tabLabels: ["Tab 1"],
-                          },
-                        });
-                        const panel = addEntity({
-                          type: "tabPanel",
-                          attributes: {},
-                        });
-                        builderStore.setEntityParent(panel.id, tabs.id);
-                      }}
-                    >
-                      Tabs
-                    </AddElementButton>
-                  </div>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            <AddElementDialog
+              builderStore={builderStore}
+              parentId={
+                activeEntityId &&
+                builderStore.getSchema().entities[activeEntityId]?.type === "tabPanel"
+                  ? activeEntityId
+                  : undefined
+              }
+            />
           </div>
         </div>
         {activeEntityId ? (
@@ -462,6 +274,19 @@ export function BasicFormBuilder() {
                 builderStore={builderStore}
                 components={entitiesAttributesComponents}
               />
+              {(() => {
+                const active = builderStore.getSchema().entities[activeEntityId];
+                if (active && active.type === "tabs") {
+                  return active.children?.map((childId, index) => (
+                    <AddElementDialog
+                      key={childId}
+                      builderStore={builderStore}
+                      parentId={childId}
+                    />
+                  ));
+                }
+                return null;
+              })()}
             </div>
           </div>
         ) : null}
