@@ -277,7 +277,7 @@ export function BasicFormBuilder() {
               {(() => {
                 const active = builderStore.getSchema().entities[activeEntityId];
                 if (active && active.type === "tabs") {
-                  return active.children?.map((childId, index) => (
+                  return active.children?.map((childId) => (
                     <AddElementDialog
                       key={childId}
                       builderStore={builderStore}

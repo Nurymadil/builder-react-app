@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabView, TabPanel } from "primereact/tabview";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertCircle, CheckCircle2, EyeIcon } from "lucide-react";
 
@@ -86,11 +86,6 @@ function PreviewJsonCard(props: { json?: Record<string, unknown> }) {
   );
 }
 
-const tabs = {
-  form: "form",
-  values: "values",
-  schema: "schema",
-};
 
 export function Preview(props: {
   builderStore: BuilderStore<typeof basicFormBuilder>;
@@ -186,23 +181,16 @@ export function Preview(props: {
           <DialogHeader>
             <DialogTitle>Preview</DialogTitle>
           </DialogHeader>
-          <Tabs
-            defaultValue="form"
+          <TabView
             className="w-full"
-            onValueChange={(tab) => {
-              if (tab === tabs.values) {
+            onTabChange={(e) => {
+              const index = e.index;
+              if (index === 1) {
                 setPreviewValues(interpreterStore.getEntitiesValues());
               }
             }}
           >
-            <TabsList className="w-full">
-              <div className="my-px grid w-full grid-cols-3">
-                <TabsTrigger value={tabs.form}>Form</TabsTrigger>
-                <TabsTrigger value={tabs.values}>Values</TabsTrigger>
-                <TabsTrigger value={tabs.schema}>Schema</TabsTrigger>
-              </div>
-            </TabsList>
-            <TabsContent value={tabs.form}>
+            <TabPanel header="Form">
               <ScrollArea className="max-h-96 overflow-auto">
                 <Form
                   interpreterStore={interpreterStore}
@@ -210,14 +198,14 @@ export function Preview(props: {
                   onValidationFail={() => (submitAttemptedRef.current = true)}
                 />
               </ScrollArea>
-            </TabsContent>
-            <TabsContent value={tabs.values}>
+            </TabPanel>
+            <TabPanel header="Values">
               <PreviewJsonCard json={previewValues} />
-            </TabsContent>
-            <TabsContent value={tabs.schema}>
+            </TabPanel>
+            <TabPanel header="Schema">
               <PreviewJsonCard json={schema} />
-            </TabsContent>
-          </Tabs>
+            </TabPanel>
+          </TabView>
         </DialogContent>
       </Dialog>
     </div>
