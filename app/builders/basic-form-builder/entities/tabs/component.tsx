@@ -1,20 +1,20 @@
 import { createEntityComponent } from "@coltorapps/builder-react";
+import { TabPanel, TabView } from "primereact/tabview";
 import { tabsEntity } from "./definition";
 
 export const TabsEntity = createEntityComponent(
   tabsEntity,
   function TabsEntity(props) {
-    const { tabLabels } = props.entity.attributes;
+    const { tabLabels, lazy } = props.entity.attributes;
     const children = props.children ?? [];
     return (
-      <div className="space-y-4">
+      <TabView renderActiveOnly={lazy ?? true} className="mt-2">
         {tabLabels.map((label, index) => (
-          <div key={index} className="grid gap-2">
-            <h3 className="text-lg font-medium">{label}</h3>
+          <TabPanel key={index} header={label}>
             {children[index] ?? null}
-          </div>
+          </TabPanel>
         ))}
-      </div>
+      </TabView>
     );
   },
 );

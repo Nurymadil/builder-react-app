@@ -47,6 +47,7 @@ export const initialSchema = {
       type: "tabs",
       attributes: {
         tabLabels: ["Info", "More"],
+        lazy: true,
       },
       children: [
         "a90e418c-2d6d-41d5-b867-14e985e881a4",
