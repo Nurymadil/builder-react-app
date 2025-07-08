@@ -23,10 +23,10 @@ export const numberFieldEntity = createEntity({
     let schema: z.ZodType<number | undefined> = z.number();
     const { min, max, required } = context.entity.attributes;
     if (typeof min === "number") {
-      schema = schema.min(min);
+      schema = (schema as z.ZodNumber).min(min);
     }
     if (typeof max === "number") {
-      schema = schema.max(max);
+      schema = (schema as z.ZodNumber).max(max);
     }
     if (!required) {
       schema = schema.optional();

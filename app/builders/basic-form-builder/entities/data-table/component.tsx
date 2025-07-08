@@ -1,24 +1,24 @@
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { createEntityComponent } from "@coltorapps/builder-react";
 
 import { dataTableEntity } from "./definition";
 
 export const DataTableEntity = createEntityComponent(
   dataTableEntity,
-  function DataTableEntity() {
-    const data = [
-      { column1: "Row 1 Cell 1", column2: "Row 1 Cell 2" },
-      { column1: "Row 2 Cell 1", column2: "Row 2 Cell 2" },
-    ];
-
-    const columns = Object.keys(data[0]);
-
+  function DataTableEntity(props) {
+    const { columns, rows, striped, bordered, label } = props.entity.attributes;
     return (
       <div className="space-y-2">
-        <Label>Data Table</Label>
-        <table className="w-full text-left border-collapse text-sm">
+        {label ? <Label>{label}</Label> : null}
+        <table
+          className={cn(
+            "w-full text-left border-collapse text-sm",
+            bordered && "border",
+          )}
+        >
           <thead>
-            <tr>
+            <tr className={striped ? "odd:bg-neutral-900" : undefined}>
               {columns.map((col) => (
                 <th key={col} className="border px-2 py-1 font-semibold">
                   {col}
@@ -27,11 +27,16 @@ export const DataTableEntity = createEntityComponent(
             </tr>
           </thead>
           <tbody>
-            {data.map((row, i) => (
-              <tr key={i}>
-                {columns.map((col, j) => (
+            {rows.map((row, i) => (
+              <tr
+                key={i}
+                className={cn({
+                  "odd:bg-neutral-900": striped,
+                })}
+              >
+                {row.map((cell, j) => (
                   <td key={j} className="border px-2 py-1">
-                    {row[col as keyof typeof row]}
+                    {cell}
                   </td>
                 ))}
               </tr>

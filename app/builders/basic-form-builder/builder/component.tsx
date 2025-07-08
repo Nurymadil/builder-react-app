@@ -27,6 +27,7 @@ import {
 import { DatePickerFieldAttributes } from "../entities/date-picker/attributes-component";
 import { ParagraphAttributes } from "../entities/paragraph/attributes-component";
 import { DataTableAttributes } from "../entities/data-table/attributes-component";
+import { DataViewAttributes } from "../entities/data-view/attributes-component";
 import { NumberFieldAttributes } from "../entities/number-field/attributes-component";
 import { CheckboxFieldAttributes } from "../entities/checkbox-field/attributes-component";
 import { SliderFieldAttributes } from "../entities/slider-field/attributes-component";
@@ -126,6 +127,7 @@ const entitiesAttributesComponents = {
   datePickerField: DatePickerFieldAttributes,
   paragraph: ParagraphAttributes,
   dataTable: DataTableAttributes,
+  dataView: DataViewAttributes,
   numberField: NumberFieldAttributes,
   checkboxField: CheckboxFieldAttributes,
   sliderField: SliderFieldAttributes,
@@ -154,7 +156,8 @@ export function BasicFormBuilder() {
       },
     },
     initialData: {
-      schema: initialSchema,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      schema: initialSchema as any,
     },
   });
 
@@ -375,11 +378,26 @@ export function BasicFormBuilder() {
                           type: "dataTable",
                           attributes: {
                             label: "Data Table",
+                            columns: [],
+                            rows: [],
                           },
                         })
                       }
                     >
                       Data Table
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "dataView",
+                          attributes: {
+                            label: "Data View",
+                            data: [],
+                          },
+                        })
+                      }
+                    >
+                      Data View
                     </AddElementButton>
                   </div>
                 </DialogHeader>
