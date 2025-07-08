@@ -32,6 +32,7 @@ import { NumberFieldAttributes } from "../entities/number-field/attributes-compo
 import { CheckboxFieldAttributes } from "../entities/checkbox-field/attributes-component";
 import { SliderFieldAttributes } from "../entities/slider-field/attributes-component";
 import { TabsAttributes } from "../entities/tabs/attributes-component";
+import { TabPanelAttributes } from "../entities/tab-panel/attributes-component";
 import { SelectFieldAttributes } from "../entities/select-field/attributes-component";
 import { TreeSelectFieldAttributes } from "../entities/tree-select-field/attributes-component";
 import { TextFieldAttributes } from "../entities/text-field/attributes-component";
@@ -135,6 +136,7 @@ const entitiesAttributesComponents = {
   checkboxField: CheckboxFieldAttributes,
   sliderField: SliderFieldAttributes,
   tabs: TabsAttributes,
+  tabPanel: TabPanelAttributes,
 };
 
 export function BasicFormBuilder() {

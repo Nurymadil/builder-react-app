@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, type JSX } from "react";
 import { Label } from "@/components/ui/label";
 import {
   Select,
