@@ -1,4 +1,3 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createEntityComponent } from "@coltorapps/builder-react";
 import { tabsEntity } from "./definition";
 
@@ -8,22 +7,14 @@ export const TabsEntity = createEntityComponent(
     const { tabLabels } = props.entity.attributes;
     const children = props.children ?? [];
     return (
-      <Tabs defaultValue="0" className="space-y-2">
-        <TabsList className="w-full">
-          <div className="grid w-full grid-flow-col auto-cols-fr">
-            {tabLabels.map((label, index) => (
-              <TabsTrigger key={index} value={index.toString()}>
-                {label}
-              </TabsTrigger>
-            ))}
-          </div>
-        </TabsList>
-        {tabLabels.map((_, index) => (
-          <TabsContent key={index} value={index.toString()}>
+      <div className="space-y-4">
+        {tabLabels.map((label, index) => (
+          <div key={index} className="grid gap-2">
+            <h3 className="text-lg font-medium">{label}</h3>
             {children[index] ?? null}
-          </TabsContent>
+          </div>
         ))}
-      </Tabs>
+      </div>
     );
   },
 );
