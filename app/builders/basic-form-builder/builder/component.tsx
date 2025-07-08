@@ -159,6 +159,30 @@ export function BasicFormBuilder() {
           payload.entity.id,
           payload.attributeName,
         );
+        if (
+          payload.entity.type === "tabs" &&
+          payload.attributeName === "tabLabels"
+        ) {
+          const labels = payload.entity.attributes.tabLabels;
+          const schema = builderStore.getSchema();
+          const children = schema.entities[payload.entity.id].children ?? [];
+
+          if (labels.length > children.length) {
+            for (let i = children.length; i < labels.length; i++) {
+              const panel = builderStore.addEntity({
+                type: "tabPanel",
+                attributes: {},
+              });
+              builderStore.setEntityParent(panel.id, payload.entity.id, {
+                index: i,
+              });
+            }
+          } else if (labels.length < children.length) {
+            for (const id of children.slice(labels.length)) {
+              builderStore.deleteEntity(id);
+            }
+          }
+        }
       },
     },
     initialData: {
