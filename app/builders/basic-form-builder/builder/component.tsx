@@ -33,6 +33,7 @@ import { CheckboxFieldAttributes } from "../entities/checkbox-field/attributes-c
 import { SliderFieldAttributes } from "../entities/slider-field/attributes-component";
 import { TabsAttributes } from "../entities/tabs/attributes-component";
 import { SelectFieldAttributes } from "../entities/select-field/attributes-component";
+import { TreeSelectFieldAttributes } from "../entities/tree-select-field/attributes-component";
 import { TextFieldAttributes } from "../entities/text-field/attributes-component";
 import { TextareaFieldAttributes } from "../entities/textarea-field/attributes-component";
 import { basicFormBuilder } from "./definition";
@@ -125,6 +126,7 @@ const entitiesAttributesComponents = {
   textField: TextFieldAttributes,
   textareaField: TextareaFieldAttributes,
   selectField: SelectFieldAttributes,
+  treeSelectField: TreeSelectFieldAttributes,
   datePickerField: DatePickerFieldAttributes,
   paragraph: ParagraphAttributes,
   dataTable: DataTableAttributes,
@@ -308,6 +310,19 @@ export function BasicFormBuilder() {
                       }
                     >
                       Select Field
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "treeSelectField",
+                          attributes: {
+                            label: "Tree Select Field",
+                            treeOptions: [],
+                          },
+                        })
+                      }
+                    >
+                      Tree Select Field
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>

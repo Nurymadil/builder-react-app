@@ -50,6 +50,30 @@ export const initialSchema = {
         tabContents: ["Tab 1 content", "Tab 2 content"],
       },
     },
+    "a1b3f6e9-5cef-499d-b8ce-be335662e23d": {
+      type: "treeSelectField",
+      attributes: {
+        label: "Category",
+        treeOptions: [
+          {
+            label: "Fruits",
+            value: "fruits",
+            children: [
+              { label: "Apple", value: "apple" },
+              { label: "Orange", value: "orange" },
+            ],
+          },
+          {
+            label: "Vegetables",
+            value: "vegetables",
+            children: [
+              { label: "Carrot", value: "carrot" },
+              { label: "Broccoli", value: "broccoli" },
+            ],
+          },
+        ],
+      },
+    },
   },
   root: [
     "a68836dc-1478-435f-bdee-ca7aff098993",
@@ -58,5 +82,6 @@ export const initialSchema = {
     "5b6fb8d2-1f50-4a55-bb3d-d49f6f0b567a",
     "31c55639-8cdb-45e2-9b5f-772a1f441bfe",
     "47bc1f4e-72d6-4dbc-81c8-f342a76ce9e4",
+    "a1b3f6e9-5cef-499d-b8ce-be335662e23d",
   ],
 } as const;
