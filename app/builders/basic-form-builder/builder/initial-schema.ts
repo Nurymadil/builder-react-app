@@ -55,11 +55,13 @@ export const initialSchema = {
     },
     "a90e418c-2d6d-41d5-b867-14e985e881a4": {
       type: "tabPanel",
+      parentId: "47bc1f4e-72d6-4dbc-81c8-f342a76ce9e4",
       attributes: {},
       children: [],
     },
     "02a5bf1c-81c1-499e-8c56-3e2d7f5adfb0": {
       type: "tabPanel",
+      parentId: "47bc1f4e-72d6-4dbc-81c8-f342a76ce9e4",
       attributes: {},
       children: [],
     },

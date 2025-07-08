@@ -4,5 +4,5 @@ import { tabLabelsAttribute } from "../../attributes/tab-labels/definition";
 export const tabsEntity = createEntity({
   name: "tabs",
   attributes: [tabLabelsAttribute],
-  childrenAllowed: ["tabPanel"],
+  childrenAllowed: true,
 });
