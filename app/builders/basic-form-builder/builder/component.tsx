@@ -26,6 +26,7 @@ import {
 
 import { DatePickerFieldAttributes } from "../entities/date-picker/attributes-component";
 import { ParagraphAttributes } from "../entities/paragraph/attributes-component";
+import { DataTableAttributes } from "../entities/data-table/attributes-component";
 import { SelectFieldAttributes } from "../entities/select-field/attributes-component";
 import { TextFieldAttributes } from "../entities/text-field/attributes-component";
 import { TextareaFieldAttributes } from "../entities/textarea-field/attributes-component";
@@ -121,6 +122,7 @@ const entitiesAttributesComponents = {
   selectField: SelectFieldAttributes,
   datePickerField: DatePickerFieldAttributes,
   paragraph: ParagraphAttributes,
+  dataTable: DataTableAttributes,
 };
 
 export function BasicFormBuilder() {
@@ -321,6 +323,18 @@ export function BasicFormBuilder() {
                       }
                     >
                       Paragraph
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "dataTable",
+                          attributes: {
+                            label: "Data Table",
+                          },
+                        })
+                      }
+                    >
+                      Data Table
                     </AddElementButton>
                   </div>
                 </DialogHeader>
