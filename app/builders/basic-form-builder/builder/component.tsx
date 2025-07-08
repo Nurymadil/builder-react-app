@@ -27,6 +27,9 @@ import {
 import { DatePickerFieldAttributes } from "../entities/date-picker/attributes-component";
 import { ParagraphAttributes } from "../entities/paragraph/attributes-component";
 import { DataTableAttributes } from "../entities/data-table/attributes-component";
+import { NumberFieldAttributes } from "../entities/number-field/attributes-component";
+import { CheckboxFieldAttributes } from "../entities/checkbox-field/attributes-component";
+import { SliderFieldAttributes } from "../entities/slider-field/attributes-component";
 import { SelectFieldAttributes } from "../entities/select-field/attributes-component";
 import { TextFieldAttributes } from "../entities/text-field/attributes-component";
 import { TextareaFieldAttributes } from "../entities/textarea-field/attributes-component";
@@ -123,6 +126,9 @@ const entitiesAttributesComponents = {
   datePickerField: DatePickerFieldAttributes,
   paragraph: ParagraphAttributes,
   dataTable: DataTableAttributes,
+  numberField: NumberFieldAttributes,
+  checkboxField: CheckboxFieldAttributes,
+  sliderField: SliderFieldAttributes,
 };
 
 export function BasicFormBuilder() {
@@ -323,6 +329,45 @@ export function BasicFormBuilder() {
                       }
                     >
                       Paragraph
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "numberField",
+                          attributes: {
+                            label: "Number Field",
+                          },
+                        })
+                      }
+                    >
+                      Number Field
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "checkboxField",
+                          attributes: {
+                            label: "Checkbox Field",
+                          },
+                        })
+                      }
+                    >
+                      Checkbox Field
+                    </AddElementButton>
+                    <AddElementButton
+                      onClick={() =>
+                        builderStore.addEntity({
+                          type: "sliderField",
+                          attributes: {
+                            label: "Slider Field",
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                          },
+                        })
+                      }
+                    >
+                      Slider Field
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
