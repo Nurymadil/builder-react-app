@@ -277,12 +277,13 @@ export function BasicFormBuilder() {
               {(() => {
                 const active = builderStore.getSchema().entities[activeEntityId];
                 if (active && active.type === "tabs") {
-                  const first = active.children?.[0];
-                  if (first) {
-                    return (
-                      <AddElementDialog builderStore={builderStore} parentId={first} />
-                    );
-                  }
+                  return active.children?.map((childId, index) => (
+                    <AddElementDialog
+                      key={childId}
+                      builderStore={builderStore}
+                      parentId={childId}
+                    />
+                  ));
                 }
                 return null;
               })()}
