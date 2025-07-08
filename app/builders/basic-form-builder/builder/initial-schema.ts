@@ -47,8 +47,21 @@ export const initialSchema = {
       type: "tabs",
       attributes: {
         tabLabels: ["Info", "More"],
-        tabContents: ["Tab 1 content", "Tab 2 content"],
       },
+      children: [
+        "a90e418c-2d6d-41d5-b867-14e985e881a4",
+        "02a5bf1c-81c1-499e-8c56-3e2d7f5adfb0",
+      ],
+    },
+    "a90e418c-2d6d-41d5-b867-14e985e881a4": {
+      type: "tabPanel",
+      attributes: {},
+      children: [],
+    },
+    "02a5bf1c-81c1-499e-8c56-3e2d7f5adfb0": {
+      type: "tabPanel",
+      attributes: {},
+      children: [],
     },
     "a1b3f6e9-5cef-499d-b8ce-be335662e23d": {
       type: "treeSelectField",

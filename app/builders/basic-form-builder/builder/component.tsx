@@ -165,6 +165,18 @@ export function BasicFormBuilder() {
     },
   });
 
+  function addEntity(
+    entity: Parameters<typeof builderStore.addEntity>[0],
+  ) {
+    const created = builderStore.addEntity(entity);
+    if (activeEntityId) {
+      const active = builderStore.getSchema().entities[activeEntityId];
+      if (active && active.type === "tabPanel") {
+        builderStore.setEntityParent(created.id, activeEntityId);
+      }
+    }
+  }
+
   const [activeEntityId, setActiveEntityId] = useState<string | null>(
     builderStore.getData().schema.root[0],
   );
@@ -276,7 +288,7 @@ export function BasicFormBuilder() {
                   <div className="space-y-2">
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "textField",
                           attributes: {
                             label: "Text Field",
@@ -288,7 +300,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "textareaField",
                           attributes: {
                             label: "Textarea Field",
@@ -300,7 +312,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "selectField",
                           attributes: {
                             label: "Select Field",
@@ -313,7 +325,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "treeSelectField",
                           attributes: {
                             label: "Tree Select Field",
@@ -326,7 +338,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "datePickerField",
                           attributes: {
                             label: "Date Picker Field",
@@ -338,7 +350,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "paragraph",
                           attributes: {
                             content: {
@@ -352,7 +364,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "numberField",
                           attributes: {
                             label: "Number Field",
@@ -364,7 +376,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "checkboxField",
                           attributes: {
                             label: "Checkbox Field",
@@ -376,7 +388,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "sliderField",
                           attributes: {
                             label: "Slider Field",
@@ -391,7 +403,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "dataTable",
                           attributes: {
                             label: "Data Table",
@@ -405,7 +417,7 @@ export function BasicFormBuilder() {
                     </AddElementButton>
                     <AddElementButton
                       onClick={() =>
-                        builderStore.addEntity({
+                        addEntity({
                           type: "dataView",
                           attributes: {
                             label: "Data View",
@@ -417,15 +429,22 @@ export function BasicFormBuilder() {
                       Data View
                     </AddElementButton>
                     <AddElementButton
-                      onClick={() =>
-                        builderStore.addEntity({
+                      onClick={() => {
+                        const tabs = builderStore.addEntity({
                           type: "tabs",
                           attributes: {
                             tabLabels: ["Tab 1"],
-                            tabContents: [""],
                           },
-                        })
-                      }
+                        });
+                        const panel = builderStore.addEntity({
+                          type: "tabPanel",
+                          attributes: {},
+                        });
+                        builderStore.setEntityParent(panel.id, tabs.id);
+                        if (activeEntityId && builderStore.getSchema().entities[activeEntityId]?.type === "tabPanel") {
+                          builderStore.setEntityParent(tabs.id, activeEntityId);
+                        }
+                      }}
                     >
                       Tabs
                     </AddElementButton>

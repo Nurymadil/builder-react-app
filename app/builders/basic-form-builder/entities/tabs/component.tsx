@@ -5,7 +5,8 @@ import { tabsEntity } from "./definition";
 export const TabsEntity = createEntityComponent(
   tabsEntity,
   function TabsEntity(props) {
-    const { tabLabels, tabContents } = props.entity.attributes;
+    const { tabLabels } = props.entity.attributes;
+    const children = props.children ?? [];
     return (
       <Tabs defaultValue="0" className="space-y-2">
         <TabsList className="w-full">
@@ -19,7 +20,7 @@ export const TabsEntity = createEntityComponent(
         </TabsList>
         {tabLabels.map((_, index) => (
           <TabsContent key={index} value={index.toString()}>
-            {tabContents[index]}
+            {children[index] ?? null}
           </TabsContent>
         ))}
       </Tabs>
